@@ -1,0 +1,5 @@
+const test=require('node:test');const assert=require('node:assert/strict');const {getDayRange,PRAYERS}=require('../app.js');
+test('all 604 pages assigned sequentially exactly once',()=>{const pages=[];for(let d=1;d<=30;d++){const r=getDayRange(d);for(let p=r.start;p<=r.end;p++)pages.push(p)}assert.equal(pages.length,604);assert.deepEqual(pages,Array.from({length:604},(_,i)=>i+1));assert.equal(new Set(pages).size,604)});
+test('daily page counts are four 21-page days and twenty-six 20-page days',()=>{const counts=Array.from({length:30},(_,i)=>getDayRange(i+1).count);assert.equal(counts.reduce((a,b)=>a+b,0),604);assert.equal(counts.filter(n=>n===21).length,4);assert.equal(counts.filter(n=>n===20).length,26)});
+test('day ranges are ordered and within page boundaries',()=>{assert.deepEqual(getDayRange(1),{start:1,end:21,count:21});assert.deepEqual(getDayRange(30),{start:585,end:604,count:20});assert.throws(()=>getDayRange(0));assert.throws(()=>getDayRange(31))});
+test('five prayer sessions are in the expected order',()=>{assert.deepEqual(PRAYERS,['Fajr','Dhuhr','Asr','Maghrib','Isha'])});
