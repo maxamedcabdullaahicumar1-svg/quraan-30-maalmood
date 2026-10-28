@@ -1,72 +1,39 @@
-```yaml
 name: Deploy Qur'aan 30 Maalmood PWA
 
 on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+push:
+branches: ["main"]
+workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+contents: read
+pages: write
+id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
+group: pages
+cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+deploy:
+environment:
+name: github-pages
+url: ${{ steps.deployment.outputs.page_url }}
+runs-on: ubuntu-latest
+steps:
+- name: Checkout
+uses: actions/checkout@v4
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload site files
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-**Important:** Copy the code inside the box, but do not copy the surrounding triple-backtick marks if they appear in your editor.
-
-## Step 4: Save the workflow
-
-1. Click **Commit changes…** near the top-right of the editor.
-2. Keep the default commit message.
-3. Click **Commit changes** again to confirm.
-
-## Step 5: Check the deployment
-
-1. Return to the repository.
-2. Click **Actions**.
-3. Open the workflow named **Deploy Qur'aan 30 Maalmood PWA**.
-4. Wait for it to finish.
-
-A green checkmark ✅ means it succeeded.
-
-## Step 6: Enable GitHub Pages
-
-If you haven't already:
-
-1. Open **Settings**.
-2. Click **Pages** in the left sidebar.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-
-Your expected website address is:
-
-[Qur'aan 30 Maalmood App](https://maxamedcabdullaahicumar1-svg.github.io/quraan-30-maalmood/?utm_source=chatgpt.com)
-
-It may take a few minutes to become available.
-
-**Start with Step 1:** click **“set up a workflow yourself.”** If the next screen looks different, send me a screenshot before continuing.
 ```
+  - name: Configure GitHub Pages
+    uses: actions/configure-pages@v5
+
+  - name: Upload site files
+    uses: actions/upload-pages-artifact@v3
+    with:
+      path: .
+
+  - name: Deploy to GitHub Pages
+    id: deployment
+    uses: actions/deploy-pages@v4
+
